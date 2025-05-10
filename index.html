@@ -2,63 +2,126 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VardiyaPro Demo</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>VardiyaPro v1.1</title>
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #121212;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #111;
             color: #fff;
             padding: 20px;
         }
         h1 {
-            color: #ffcc00;
-            font-size: 28px;
+            color: gold;
+            text-align: center;
         }
-        .section {
-            background-color: #1f1f1f;
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 20px;
-        }
-        button {
+        .button {
             width: 100%;
             padding: 15px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 8px;
-            background-color: #ffcc00;
+            margin: 10px 0;
+            background-color: gold;
+            color: black;
             font-weight: bold;
+            border: none;
+            border-radius: 10px;
             font-size: 16px;
             cursor: pointer;
         }
-        .footer {
-            margin-top: 40px;
-            font-size: 14px;
-            color: #aaa;
-            text-align: center;
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            color: white;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+        .modal-content {
+            background-color: #222;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+        }
+        .close {
+            color: red;
+            float: right;
+            font-size: 22px;
+            cursor: pointer;
+        }
+        select, input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
-    <h1>VardiyaPro – Demo Uygulama</h1>
+    <h1>VardiyaPro Demo</h1>
 
-    <div class="section">
-        <p><strong>Kullanıcı:</strong> Harun Önal</p>
-        <p><strong>Görev Yeri:</strong> Genel Cerrahi</p>
-        <p><strong>Rütbe:</strong> Çalışan ★</p>
+    <button class="button" onclick="openModal('acil')">🚨 Acil Kod Bildir</button>
+    <button class="button" onclick="openModal('izin')">📝 İzin Talebi Gönder</button>
+    <button class="button" onclick="openModal('gorev')">🔁 Görev Yeri Değiştir</button>
+    <button class="button" onclick="openModal('rapor')">📄 Vardiya Raporu Görüntüle</button>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modal-body"></div>
+        </div>
     </div>
 
-    <div class="section">
-        <button>🚨 Acil Kod Bildir</button>
-        <button>📝 İzin Talebi Gönder</button>
-        <button>🔁 Görev Yeri Değiştir</button>
-        <button>📄 Vardiya Raporu Görüntüle</button>
-    </div>
+    <script>
+        function openModal(type) {
+            const modal = document.getElementById("modal");
+            const body = document.getElementById("modal-body");
 
-    <div class="footer">
-        VardiyaPro v1.0 | Demo Sürüm
-    </div>
+            if (type === "acil") {
+                body.innerHTML = "<h3>Kod 112 bildirildi!</h3><p>Destek ekibi yönlendiriliyor.</p>";
+            } else if (type === "izin") {
+                body.innerHTML = `
+                    <h3>İzin Talebi</h3>
+                    <select>
+                        <option>Günlük İzin</option>
+                        <option>Yıllık İzin</option>
+                        <option>Sağlık İzni</option>
+                    </select>
+                    <input type="date" />
+                    <button onclick="alert('İzin talebin iletildi.')">Gönder</button>
+                `;
+            } else if (type === "gorev") {
+                body.innerHTML = `
+                    <h3>Görev Yeri Değiştir</h3>
+                    <select>
+                        <option>Acil</option>
+                        <option>Dahiliye</option>
+                        <option>Yoğun Bakım</option>
+                        <option>Genel Cerrahi</option>
+                    </select>
+                    <button onclick="alert('Görev değişikliği talebi gönderildi.')">Talep Et</button>
+                `;
+            } else if (type === "rapor") {
+                body.innerHTML = `
+                    <h3>Vardiya Bilgisi</h3>
+                    <p>10 Mayıs 2025</p>
+                    <p>08:00 - 20:00</p>
+                    <p>Şef: Sedat ŞENGÜL</p>
+                    <p>Durum: Nöbet aktif</p>
+                `;
+            }
+
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+    </script>
 </body>
 </html>
